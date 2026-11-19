@@ -493,7 +493,7 @@
           type="url"
           id="apiInput"
           class="api-input"
-          placeholder="Paste your API URL (e.g. https://pramod-ai-hub.loca.lt)"
+          placeholder="Paste your API URL (e.g. https://mashing-undying-empirical.ngrok-free.dev)"
           autocomplete="off"
           spellcheck="false"
         />
@@ -766,7 +766,10 @@
       try {
         const res = await fetch(normalized + '/api/health', { 
           mode: 'cors',
-          headers: { 'Bypass-Tunnel-Reminder': 'true' }
+          headers: { 
+            'Bypass-Tunnel-Reminder': 'true',
+            'ngrok-skip-browser-warning': 'true'
+          }
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
@@ -797,7 +800,10 @@
         try {
           const vRes = await fetch(normalized + '/api/voices', { 
             mode: 'cors',
-            headers: { 'Bypass-Tunnel-Reminder': 'true' }
+            headers: { 
+              'Bypass-Tunnel-Reminder': 'true',
+              'ngrok-skip-browser-warning': 'true'
+            }
           });
           const vData = await vRes.json();
           if (vData.voices && vData.voices.length) {
@@ -900,7 +906,8 @@
           mode: 'cors',
           headers: { 
             'Content-Type': 'application/json',
-            'Bypass-Tunnel-Reminder': 'true'
+            'Bypass-Tunnel-Reminder': 'true',
+            'ngrok-skip-browser-warning': 'true'
           },
           body: JSON.stringify({
             message: text,
@@ -996,7 +1003,10 @@
         const res = await fetch(apiBaseUrl + '/api/voice-chat-stream', {
           method: 'POST',
           mode: 'cors',
-          headers: { 'Bypass-Tunnel-Reminder': 'true' },
+          headers: { 
+            'Bypass-Tunnel-Reminder': 'true',
+            'ngrok-skip-browser-warning': 'true'
+          },
           body: form
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -1044,7 +1054,7 @@
     (function init() {
       const params = new URLSearchParams(window.location.search);
       const fromParam = params.get('api');
-      const saved = fromParam || localStorage.getItem('nova_laptop_api_url') || 'https://pramod-ai-hub.loca.lt';
+      const saved = fromParam || localStorage.getItem('nova_laptop_api_url') || 'https://mashing-undying-empirical.ngrok-free.dev';
       if (saved) {
         apiInput.value = saved;
         connectApi(true);
