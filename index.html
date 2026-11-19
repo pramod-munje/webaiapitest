@@ -493,7 +493,7 @@
           type="url"
           id="apiInput"
           class="api-input"
-          placeholder="Paste your API URL (e.g. https://xxxx.trycloudflare.com)"
+          placeholder="Paste your API URL (e.g. https://pramod-ai-hub.loca.lt)"
           autocomplete="off"
           spellcheck="false"
         />
@@ -764,7 +764,10 @@
       pingMsg.textContent = '';
 
       try {
-        const res = await fetch(normalized + '/api/health', { mode: 'cors' });
+        const res = await fetch(normalized + '/api/health', { 
+          mode: 'cors',
+          headers: { 'Bypass-Tunnel-Reminder': 'true' }
+        });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
 
@@ -792,7 +795,10 @@
 
         // Load voices from laptop
         try {
-          const vRes = await fetch(normalized + '/api/voices', { mode: 'cors' });
+          const vRes = await fetch(normalized + '/api/voices', { 
+            mode: 'cors',
+            headers: { 'Bypass-Tunnel-Reminder': 'true' }
+          });
           const vData = await vRes.json();
           if (vData.voices && vData.voices.length) {
             const prev = voiceSelect.value;
@@ -892,7 +898,10 @@
         const res = await fetch(apiBaseUrl + '/api/chat-stream', {
           method: 'POST',
           mode: 'cors',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Bypass-Tunnel-Reminder': 'true'
+          },
           body: JSON.stringify({
             message: text,
             voice: voiceSelect.value,
@@ -987,6 +996,7 @@
         const res = await fetch(apiBaseUrl + '/api/voice-chat-stream', {
           method: 'POST',
           mode: 'cors',
+          headers: { 'Bypass-Tunnel-Reminder': 'true' },
           body: form
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -1034,7 +1044,7 @@
     (function init() {
       const params = new URLSearchParams(window.location.search);
       const fromParam = params.get('api');
-      const saved = fromParam || localStorage.getItem('nova_laptop_api_url') || '';
+      const saved = fromParam || localStorage.getItem('nova_laptop_api_url') || 'https://pramod-ai-hub.loca.lt';
       if (saved) {
         apiInput.value = saved;
         connectApi(true);
